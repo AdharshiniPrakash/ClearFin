@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearFin</title>
+    <link rel="icon" type="image/png" href="resources/fav.png">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script defer src="script.js"></script>
+    <style type="text/tailwindcss">
+        @theme {
+        --color-income: #E6F1ED;
+        --color-expense: #E8E5F2;
+        --color-dark-income: #688E80;
+        --color-dark-expense: #9F95E4;
+      }
+    </style>
+</head>
+
+<body class="min-h-screen font-sans">
+    <main class="min-h-screen flex items-start justify-between flex-col lg:flex-row">
+        <div class="w-full lg:w-3/4 bg-[#fbfbfb] min-h-screen">
+            <div class="m-2 p-2 lg:m-8 lg:p-4">
+
+                <div class="w-full p-8">
+
+                    <h1 class="text-slate-800 text-3xl"><strong>Clear<span class="text-dark-income">Fin</span></strong>
+                    </h1>
+                    <h2 class="font-semibold text-slate-800 text-2xl mt-6">Welcome back!</h2>
+                    <div class="text-slate-600 text-sm my-2">Check the latest updates on your account... </div>
+
+                    <div class="w-full md:w-[90%] lg:w-full mx-auto mt-8 flex flex-wrap justify-start md:justify-center lg:justify-between items-center md:gap-x-3 md:gap-y-5 lg:gap-3 lg:flex-nowrap">
+                        <div
+                            class="relative w-full md:w-[45%] lg:w-1/3 bg-white border-l border-l-10 border-income p-4 rounded-md hover:shadow-md">
+                            <div class="absolute top-4 right-4">
+                                <img alt="income" src="resources/income.svg">
+                            </div>
+                            <div class="text-sm font-medium text-stone-400"> Total Income</div>
+                            <div id="incomeDisplay" class="mt-2 text-2xl lg:text-3xl font-bold">₹ 10000</div>
+                            <div class="mt-4 lg:mt-8 pt-2 text-sm text-stone-400 border-t border-t-1 border-stone-400">
+                                Last
+                                month: ₹ 100000</div>
+                        </div>
+                        <div
+                            class="relative w-full  md:w-[45%] lg:w-1/3  bg-white border-l border-l-10 border-expense p-4 rounded-md hover:shadow-md">
+                            <div class="absolute top-4 right-4">
+                                <img alt="income" src="resources/expense.svg">
+                            </div>
+                            <div class="text-sm font-medium text-stone-400"> Total Expense</div>
+                            <div id="expensesDisplay" class="mt-2 text-2xl lg:text-3xl font-bold">₹ 2000</div>
+                            <div class="mt-4 lg:mt-8  pt-2 text-sm text-stone-400 border-t border-t-1 border-stone-400">
+                                Last
+                                month: ₹ 800000</div>
+                        </div>
+                        <div
+                            class="relative w-full md:w-1/2 lg:w-1/3  bg-white border-l border-l-10 border-[#FFD580] p-4 rounded-md hover:shadow-md">
+                            <div class="absolute top-4 right-4">
+                                <img alt="income" src="resources/balance.svg">
+                            </div>
+                            <div class="text-sm font-medium text-stone-400"> Net Balance</div>
+                            <div id="balanceDisplay" class="mt-2 text-2xl lg:text-3xl font-bold">₹ 8000</div>
+                            <div class="mt-4 lg:mt-8  pt-2 text-sm text-stone-400 border-t border-t-1 border-stone-400">
+                                Last
+                                month: ₹ 200000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-0 lg:mx-8 my-2 p-2 lg:p-4 bg-white h-2/3">
+                    <div class="mx-4 mt-4 flex justify-between items-center">
+                        <h1 class="font-bold text-xl mb-4">Transactions</h1>
+                        <div class="relative">
+                            <img id="trnxFilter" src="resources/filter.svg" alt="Filter" class="w-[24px] h-[24px] cursor-pointer">
+                            <div id="trnxFilterPopup" class="hidden absolute right-0 top-full w-max mt-2 bg-white border rounded shadow z-50">
+                                <div id="allTxn" class="px-3 py-2 hover:bg-slate-100 cursor-pointer">All</div>
+                                <div id="incomeTxn" class="px-3 py-2 hover:bg-slate-100 cursor-pointer">Filter Income</div>
+                                <div id="expensesTxn" class="px-3 py-2 hover:bg-slate-100 cursor-pointer">Filter Expense</div>
+                                <div id="newTxn" class="px-3 py-2 hover:bg-slate-100 cursor-pointer">Sort by Newer</div>
+                                <div id="oldTxn" class="px-3 py-2 hover:bg-slate-100 cursor-pointer">Sort by Older</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full h-90 overflow-y-scroll bg-white rounded-md" id="trnxTable">
+                        <div class="my-4 text-center text-md text-slate-500">No transactions are done yet</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full lg:w-1/3 bg-white h-auto lg:h-screen flex flex-col justify-center items-center">
+            <div class="w-2/3 mt-8 mb-4">
+                <h1 class="font-bold text-4xl">Take <span class="text-dark-income">control</span> of your <span
+                        class="text-dark-income">cash flow</span>. </h1>
+                <p class="text-slate-600 text-sm mt-2">ClearFin is a simple, intuitive tool designed to help you track
+                    your income and expenses instantly. No complex charts, no sign-ups—just clear financial clarity.</p>
+            </div>
+            <div class="w-2/3">
+                <fieldset>
+                    <div class="w-full max-w-sm mx-auto mt-5">
+                        <div class="flex justify-between relative">
+                            <input type="radio" name="txnType" id="income" class="peer/income hidden" checked="">
+
+                            <input type="radio" name="txnType" id="expense" class="peer/expense hidden">
+
+                            <label for="income"
+                                class="cursor-pointer w-1/2  text-center text-[#2fa074] font-medium peer-checked/income:text-[#2fa074] peer-checked/expense:text-slate-800 border-b-2 border-[#2fa074] peer-checked/expense:border-slate-600">
+                                Income
+                            </label>
+
+                            <label for="expense"
+                                class="cursor-pointer w-1/2 text-center text-slate-800 font-medium peer-checked/expense:text-[#2fa074] border-b-2 border-slate-600 peer-checked/expense:border-[#2fa074]">
+                                Expense
+                            </label>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="mt-4">
+                    <label for="amount" class="block text-sm font-medium text-slate-700">Amount</label>
+                    <input type="number" id="amount" name="amount"
+                        class="mt-1 block w-full bg-stone-100 rounded p-3 focus:border-slate-500" required="">
+                </fieldset>
+
+                <fieldset class="mt-4">
+                    <label for="description" class="block text-sm font-medium text-slate-700">Description</label>
+                    <input type="text" id="description" name="description"
+                        class="mt-1 block w-full bg-stone-100 rounded p-3 focus:border-slate-500" required=""
+                        maxlength="35">
+                </fieldset>
+
+                <fieldset class="mt-4">
+                    <label for="category" class="block text-sm font-medium text-slate-700">Category</label>
+                    <select id="category" name="category"
+                        class="mt-1 block w-full bg-stone-100 rounded p-3 focus:border-slate-500" required="">
+                        <option value="Salary">Salary</option>
+                        <option value="Grocery">Grocery</option>
+                        <option value="Dining">Dining</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </fieldset>
+
+                <div class="mt-6 mb-4">
+                    <button
+                        class="w-full bg-dark-income text-white py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                        onclick="addNewTxn()">Add New
+                        Transaction</button>
+                </div>
+            </div>
+            <div class="m-4 mt-6 w-2/3">
+                <div class="font-bold text-left text-xl mb-2">Monthly Budget Overview</div>
+                <div class="w-full max-w-5xl mx-auto py-6 px-2">
+
+                    <div class="w-full h-6 lg:h-3 bg-gray-100 rounded-full overflow-hidden flex" id="progressBar"></div>
+
+                    <div class="flex flex-wrap gap-x-8 lg:gap-x-6 gap-y-3 mt-4" id="progressLabel"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
